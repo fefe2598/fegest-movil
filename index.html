@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>FeGest Feria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f2937">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="FeGest Feria">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div id="app">
+  <header id="top">
+    <div id="titulo">FeGest <span>Feria</span></div>
+    <button id="estado" type="button" data-act="sync" aria-label="Estado de sincronización"><i id="punto"></i><span id="estadoTxt">…</span></button>
+    <button id="menu" type="button" data-act="ajustes" aria-label="Ajustes">⚙</button>
+  </header>
+  <main id="main"></main>
+  <div id="barraCarrito" hidden></div>
+  <nav id="tabs">
+    <button data-tab="vender" class="on"><b>🛒</b>Vender</button>
+    <button data-tab="productos"><b>📦</b>Productos</button>
+    <button data-tab="ventas"><b>🧾</b>Ventas</button>
+    <button data-tab="fiados"><b>📒</b>Fiados</button>
+    <button data-tab="caja"><b>💵</b>Caja</button>
+  </nav>
+</div>
+<div id="velo" hidden></div>
+<div id="hoja" hidden></div>
+<div id="aviso" hidden></div>
+<script src="nucleo.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
