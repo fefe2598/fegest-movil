@@ -42,6 +42,11 @@ input,select,textarea{font:inherit;color:inherit}
 .fila .pre{font-weight:800;white-space:nowrap}
 .stock{font-size:12px;font-weight:700;color:var(--ok)}.stock.bajo{color:var(--warn)}.stock.cero{color:var(--mal)}
 .oferta{font-size:11px;background:#fee2e2;color:#b91c1c;border-radius:6px;padding:1px 6px;margin-left:4px;font-weight:700}
+/* v1.0.22 — foto y descripción */
+.mini{width:44px;height:44px;border-radius:8px;object-fit:cover;background:#e5e7eb;flex-shrink:0}
+.infob{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;margin-left:6px;border-radius:50%;border:1px solid #9ca3af;color:#4b5563;font:italic 700 13px Georgia,serif;vertical-align:middle;background:#f3f4f6}
+.foto-grande{display:block;max-width:100%;max-height:48vh;margin:6px auto 10px;border-radius:10px;object-fit:contain;background:#f3f4f6}
+.detalle{white-space:pre-wrap;word-break:break-word;font-size:15px;line-height:1.45;margin:6px 0}
 .vacio{text-align:center;color:var(--tx2);padding:34px 12px}
 .tarjeta{background:var(--card);border-radius:var(--r);padding:14px;margin-bottom:10px}
 .tarjeta h3{margin:0 0 8px;font-size:15px}

@@ -1,5 +1,5 @@
 // FeGest Feria — service worker: la app abre y funciona sin internet.
-const VERSION = 'fegest-feria-v1.0.21';
+const VERSION = 'fegest-feria-v1.0.22';
 const ARCHIVOS = ['./', './index.html', './nucleo.js', './app.js', './estilos.css', './zxing.min.js', './manifest.webmanifest',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 

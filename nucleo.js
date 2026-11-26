@@ -3,7 +3,7 @@
    Todo lo que se hace queda primero en el celular (IndexedDB) y después se sube a la nube
    cuando hay internet. El stock que se ve = catálogo de la notebook + operaciones nuevas. */
 
-const VERSION = '1.0.21';
+const VERSION = '1.0.22';
 const F = {};            // espacio de nombres compartido con app.js
 
 /* ───────────── IndexedDB ───────────── */

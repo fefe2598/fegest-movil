@@ -115,10 +115,29 @@ function stockTag(p) {
   const s = p.s; const c = s <= 0 ? 'cero' : s <= 3 ? 'bajo' : '';
   return `<span class="stock ${c}">${s <= 0 ? 'Sin stock' : s + ' u.'}</span>`;
 }
+/* v1.0.22 — foto chica y botón i (descripción): se tocan y abren la ficha grande */
+function fotoSegura(u) { return /^https:\/\/[^\s"'<>`\\]+$/i.test(u || '') ? u : ''; }
+function fotoMini(u) { return fotoSegura(u).replace(/([?&])sz=w\d+/, '$1sz=w160'); }
+function miniFotoHTML(p, cls) {
+  const m = fotoMini(p.im); if (!m || !p.key) return '';
+  return `<img class="${cls}" src="${esc(m)}" data-act="info" data-k="${esc(p.key)}" loading="lazy" referrerpolicy="no-referrer" alt="" onerror="this.style.display='none'">`;
+}
+function infoBtnHTML(p) {
+  return p.de && p.de.trim() && p.key ? `<span class="infob" role="button" tabindex="0" data-act="info" data-k="${esc(p.key)}" aria-label="Más info">i</span>` : '';
+}
+function infoProducto(key) {
+  const p = S.derivado.P.get(key); if (!p) return;
+  const g = fotoSegura(p.im), det = (p.de || '').trim();
+  if (!g && !det) return;
+  hoja(tituloHoja(p.n) + (g ? `<img class="foto-grande" src="${esc(g)}" referrerpolicy="no-referrer" alt="" onerror="this.style.display='none'">` : '')
+    + (det ? `<p class="detalle">${esc(det)}</p>` : '')
+    + `<p class="nota" style="margin:4px 0 0">${mon(F.precioOferta(p))} · ${p.s <= 0 ? 'sin stock' : p.s + ' u.'}</p>`
+    + `<div class="dos" style="margin-top:10px"><button class="btn sec" data-act="cerrar">Cerrar</button><button class="btn" data-act="addinfo" data-k="${esc(p.key)}">＋ Agregar al carrito</button></div>`);
+}
 function filaProducto(p, act) {
   const of = F.precioOferta(p) < p.p;
-  return `<button class="fila" data-act="${act}" data-k="${esc(p.key)}">
-    <div class="nom"><b>${esc(p.n)}${of ? `<span class="oferta">-${p.o[0]}%</span>` : ''}</b><small>${esc(p.c)}${p.cb ? ' · ' + esc(p.cb) : ''}${p.nuevo ? ' · nuevo' : ''}</small></div>
+  return `<button class="fila" data-act="${act}" data-k="${esc(p.key)}">${miniFotoHTML(p, 'mini')}
+    <div class="nom"><b>${esc(p.n)}${of ? `<span class="oferta">-${p.o[0]}%</span>` : ''}${infoBtnHTML(p)}</b><small>${esc(p.c)}${p.cb ? ' · ' + esc(p.cb) : ''}${p.nuevo ? ' · nuevo' : ''}</small></div>
     <div style="text-align:right"><div class="pre">${mon(F.precioOferta(p))}</div>${stockTag(p)}</div></button>`;
 }
 function rVender() {
@@ -178,7 +197,8 @@ function lineaCarritoHTML(x, i) {
   const pr = precioLinea(x); const dif = Math.abs(pr - x.base) > 0.004;
   const tag = (S.may.on && !x.sinMay && x.prOv == null) ? '<span class="oferta" style="background:#dbeafe;color:#1d4ed8">💼 may.</span>'
     : (x.prOv == null && x.ofe < x.base - 0.004 ? '<span class="oferta">oferta</span>' : '');
-  return `<div class="lin"><div class="nom"><b>${esc(x.n)} ${tag}</b>
+  const _pp = S.derivado && S.derivado.P.get(x.k);
+  return `<div class="lin">${_pp ? miniFotoHTML(_pp, 'mini') : ''}<div class="nom"><b>${esc(x.n)} ${tag}</b>
       <small><button class="precio-edit" data-act="precio" data-i="${i}">${mon(pr)}</button> c/u${dif ? ` <s>${mon(x.base)}</s>` : ''}</small></div>
       <div class="cant"><button data-act="menos" data-i="${i}">−</button><span>${x.c}</span><button data-act="mas" data-i="${i}">+</button></div>
       <b style="min-width:70px;text-align:right">${mon(pr * x.c)}</b></div>`;
@@ -704,6 +724,8 @@ async function accion(a, d) {
     case 'ajustes': ajustes(); break;
     case 'cat': ui.cat = d.v; rVender(); break;
     case 'add': agregarAlCarrito(d.k); break;
+    case 'info': infoProducto(d.k); break;
+    case 'addinfo': cerrar(); agregarAlCarrito(d.k); break;
     case 'addv': cerrar(); agregarAlCarrito(d.k, d.v); break;
     case 'carrito': abrirCarrito(); break;
     case 'mas': S.cart[+d.i].c++; F.guardarCart(); abrirCarrito(); barraCarrito(); break;
